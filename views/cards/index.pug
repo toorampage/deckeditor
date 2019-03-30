@@ -4,4 +4,12 @@ block content
     Card Search
   input#search(type="text", name ="fields")
   p#results
-  
+  a#searchbutton(class='button' href='/cards/search') Search
+  script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js')
+  script.
+    $(document).ready(
+      function(){
+        $.ajax({url: "/cards/search", success: function(result){
+          $("#searchbutton").html(result);
+        }});
+      });
