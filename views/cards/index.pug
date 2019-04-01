@@ -16,6 +16,7 @@ block content
         $.ajax({
           url:'/cards/search',
           type : 'POST',
+          data: $('form').serialize(),
           success: function(data){
             if(data.message){
               $('#results').html(data.message);
