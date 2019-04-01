@@ -9,7 +9,10 @@ block content
   script.
     $(document).ready(
       function(){
-        $.ajax({url: "/cards/search", success: function(result){
+      var formData = {
+        name : $("#search").val(),
+      }
+        $.ajax({url: "/cards/search",data:JSON.stringify (formData) success: function(result){
           $("#searchbutton").html(result);
         }});
       });
