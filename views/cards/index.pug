@@ -2,17 +2,29 @@ extend ../layout
 block content
   p
     Card Search
-  input#search(type="text", name ="fields")
+  form(method='POST' action='/')
+    div.form-group
+      label(for='name') Name:
+      input#search_field.form-control(type='text', placeholder='Enter card name' name='search_field')
+      input#search_button(type='submit')  
   p#results
-  a#searchbutton(class='button' href='#') Search
   script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js')
   script.
-    $(document).ready(
-      function(){
-      var formData = {
-        'name' : $("#search").val()
-      };
-        $.ajax({url: "/cards/search",data:JSON.stringify (formData) success: function(result){
-          $("#searchbutton").html(result);
-        }});
-      });
+    $('form').on('submit',makeRequest);
+      function makeRequest(e){
+        e.preventDefault();
+        $.ajax({
+          url:'/cards/search',
+          type : 'POST',
+          success: function(data){
+            if(data.message){
+              $('#results').html(data.message);
+            } else {
+              $('#results').html('Sorry, an error occured');
+            }
+          },
+          error: function(){
+            $('#results').html('Sorry, an error occurred');
+          }
+        });
+    }

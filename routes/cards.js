@@ -10,18 +10,22 @@ router.get('/', function(req, res, next) {
   res.render('cards/index', { title: 'Express' });
 });
 
-module.exports = router;
-
-router.get('/search', function(req, res){
-   var name = req.name;
-   var cardsArray = [];
 
 
-   MongoClient.connect(dbhost, function(err, db) {
-        var db=db.db(database.database);
-        if(!err) {
+router.post('/search', function(req, res){
+  console.log("***REQUEST START***");
+  console.log(req);
+  console.log("***REQUEST END***");
+  var name = req.query.name;
+  var cardsArray = [];
+
+
+  MongoClient.connect(dbhost, function(err, db) {
+    var db=db.db(database.database);
+    if(!err) {
+      console.log("req: "+name);
       console.log("Cardname: "+name);
-            console.log("We are connected");
+      console.log("We are connected");
             var cardsCollection = db.collection('cards');
 
             cardsCollection.find({"name": name}).toArray(function(err, cardDocs) {
@@ -39,7 +43,7 @@ router.get('/search', function(req, res){
                 };
                 console.log(response);
                 res.end(JSON.stringify(response));
-                
+
             });
         }else{
             console.log("error:" +err);
@@ -47,3 +51,5 @@ router.get('/search', function(req, res){
         }
     });
 })
+
+module.exports = router;
