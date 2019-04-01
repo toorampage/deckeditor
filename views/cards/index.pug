@@ -1,13 +1,17 @@
 extend ../layout
 block content
-  p
-    Card Search
-  form(method='POST' action='/')
-    div.form-group
-      label(for='name') Name:
-      input#search_field.form-control(type='text', placeholder='Enter card name' name='search_field')
-      input#search_button(type='submit')  
-  p#results
+  .cardSearchPanel
+    p
+      Card Search
+    form(method='POST' action='/')
+      div.form-group
+        label(for='name') Name:
+        input#search_field.form-control(type='text', placeholder='Enter card name' name='search_field')
+        input#search_button(type='submit')  
+        div#results
+  .decklistPanel
+    div.deckName
+    div.deckContents
   script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js')
   script.
     $('form').on('submit',makeRequest);
@@ -18,8 +22,14 @@ block content
           type : 'POST',
           data: $('form').serialize(),
           success: function(data){
-            if(data.message){
-              $('#results').html(data.message);
+            // -- Clear all cards
+            $('#results').empty();
+            
+            cardsData = JSON.parse(data);
+            if(cardsData.cards){
+              for(var i = 0; i < cardsData.cards.length; i++){
+                $('#results').append('<img src="https://art.hearthstonejson.com/v1/render/latest/enUS/256x/'+cardsData.cards[i].id+'.png" />'); 
+              }
             } else {
               $('#results').html('Sorry, an error occured');
             }
@@ -29,3 +39,5 @@ block content
           }
         });
     }
+  div#decklist
+    

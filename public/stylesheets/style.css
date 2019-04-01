@@ -6,3 +6,26 @@ body {
 a {
   color: #00B7FF;
 }
+
+html, body {
+    height: 100%;
+    overflow: hidden;
+}
+div {
+    outline: 1px solid red;
+}
+
+
+.cardSearchPanel
+{
+    width: 80%;
+    height: 100%;
+    float: left;
+}
+
+.decklistPanel
+{
+    width: 20%;
+    height: 100%;
+    float: right;
+}
