@@ -13,7 +13,7 @@ router.get('/', function(req, res, next) {
 module.exports = router;
 
 router.get('/search', function(req, res){
-   var name = req.query.name;
+   var name = req.name;
    var cardsArray = [];
 
 
@@ -24,7 +24,7 @@ router.get('/search', function(req, res){
             console.log("We are connected");
             var cardsCollection = db.collection('cards');
 
-            cardsCollection.find({"name": "Wrathguard"}).toArray(function(err, cardDocs) {
+            cardsCollection.find({"name": name}).toArray(function(err, cardDocs) {
 
         console.log("Printing docs from Array")
                 cardDocs.forEach(function(card) {
@@ -39,7 +39,7 @@ router.get('/search', function(req, res){
                 };
                 console.log(response);
                 res.end(JSON.stringify(response));
-                db.close();
+                
             });
         }else{
             console.log("error:" +err);
