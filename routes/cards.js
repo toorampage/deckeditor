@@ -16,7 +16,7 @@ router.post('/search', function(req, res){
   console.log("***REQUEST START***");
   console.log(req);
   console.log("***REQUEST END***");
-  var name = req.query.name;
+  var name = req.body.search_field;
   var cardsArray = [];
 
 
